@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "ar_pwu",
-  "provides": ["btw_pwu", "pwu", "PreventWastedUses", "PreventWastedUsesAddon"],
+  "provides": ["btw_pwu", "btw-pwu", "pwu", "prevent_wasted_uses"],
   "version": "${version}",
   "name": "Prevent Wasted Uses",
   "description": "Prevents tool durability loss when tools are used ineffectively.",
