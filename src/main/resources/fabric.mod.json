@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "ar_pwu",
+  "provides": ["btw_pwu", "pwu", "PreventWastedUses", "PreventWastedUsesAddon"],
   "version": "${version}",
   "name": "Prevent Wasted Uses",
   "description": "Prevents tool durability loss when tools are used ineffectively.",
@@ -27,6 +28,5 @@
   "depends": {
     "fabricloader": ">=0.12.0",
     "minecraft": "1.6.4"
-  },
-  "provides": ["PreventWastedUses"]
+  }
 }
