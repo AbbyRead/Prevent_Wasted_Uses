@@ -1,0 +1,32 @@
+# gradle
+.gradle/
+build/
+build_BTW/
+out/
+classes/
+
+# reference
+btw-sources.jar
+btw-sources
+
+# eclipse
+*.launch
+
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# fabric
+run/
+
+# macos
+*.DS_Store
