@@ -3,10 +3,8 @@
   "id": "ar_pwu",
   "version": "${version}",
   "name": "Prevent Wasted Uses",
-  "description": "This addon prevents tool damage if the tool was not helpful",
-  "authors": [
-    "Abigail Read"
-  ],
+  "description": "Prevents tool durability loss when tools are used ineffectively.",
+  "authors": ["Abigail Read"],
   "contact": {
     "homepage": "https://github.com/AbbyRead/Prevent_Wasted_Uses",
     "sources": "https://github.com/AbbyRead/Prevent_Wasted_Uses",
@@ -16,8 +14,6 @@
   "icon": "assets/ar_pwu/PWU_Thumbnail_512x512.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-    ],
     "btw:addon": [
       "btw.community.abbyread.pwu.PreventWastedUsesAddon"
     ]
@@ -29,7 +25,8 @@
     "ar_pwu.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.19",
+    "fabricloader": ">=0.12.0",
     "minecraft": "1.6.4"
-  }
+  },
+  "provides": ["PreventWastedUses"]
 }

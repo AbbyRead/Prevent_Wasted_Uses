@@ -1,12 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "btw.community.example.mixin",
+  "package": "btw.community.abbyread.pwu",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "mixin.ItemStackMixin"
   ],
   "client": [
-    "btw.community.abbyread.pwu.mixin.ExampleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
