@@ -9,17 +9,16 @@ public class UsefulnessHelper {
      * Damages an item only if it's more efficient than bare hands at mining the target block.
      * Bare hands are assumed to have 1.0x efficiency multiplier.
      *
-     * @param itemStack The tool being used
-     * @param world The world
-     * @param block The block being mined
-     * @param x Block X coordinate
-     * @param y Block Y coordinate
-     * @param z Block Z coordinate
+     * @param itemStack    The tool being used
+     * @param world        The world
+     * @param block        The block being mined
+     * @param x            Block X coordinate
+     * @param y            Block Y coordinate
+     * @param z            Block Z coordinate
      * @param damageAmount How much damage to apply
-     * @param entity The entity using the tool
-     * @return true if damage was applied, false if prevented due to inefficiency
+     * @param entity       The entity using the tool
      */
-    public static boolean damageIfUseful(
+    public static void damageIfUseful(
             ItemStack itemStack,
             World world,
             Block block,
@@ -31,11 +30,11 @@ public class UsefulnessHelper {
     ) {
         // Safety checks
         if (itemStack == null || world == null || block == null || entity == null) {
-            return false;
+            return;
         }
 
         if (!itemStack.isItemStackDamageable()) {
-            return false;
+            return;
         }
 
         // Get the efficiency of the current tool on this block
@@ -65,10 +64,8 @@ public class UsefulnessHelper {
             if (!world.isRemote && DEBUG) {
                 System.out.println("Damaged item by " + damageAmount);
             }
-            return true;
         }
 
-        return false;
     }
 
 }
