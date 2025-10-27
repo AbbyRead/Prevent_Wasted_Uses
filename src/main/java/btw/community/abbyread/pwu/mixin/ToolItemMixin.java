@@ -38,7 +38,7 @@ public class ToolItemMixin {
     ) {
         Block block = Block.blocksList[blockID];
         if (block != null) {
-            UsefulnessHelper.damageItemIfEfficient(
+            UsefulnessHelper.damageIfUseful(
                     stack,
                     world,
                     block,

@@ -15,7 +15,7 @@ import btw.community.abbyread.pwu.util.UsefulnessHelper;
 public class ItemToolMixin {
 
     /**
-     * Redirect the damageItem call in onBlockDestroyed to check efficiency first.
+     * Redirect the damageItem call in onBlockDestroyed to check if useful before applying damage.
      * <p></p>
      * This intercepts: par1ItemStack.damageItem(1, par7EntityLivingBase);
      * In the method: onBlockDestroyed(ItemStack, World, int, int, int, int, EntityLivingBase)
@@ -44,7 +44,7 @@ public class ItemToolMixin {
 
         // Only check efficiency if we have a valid block
         if (block != null) {
-            UsefulnessHelper.damageItemIfEfficient(
+            UsefulnessHelper.damageIfUseful(
                     stack,
                     world,
                     block,

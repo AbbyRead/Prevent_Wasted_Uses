@@ -19,7 +19,7 @@ public class UsefulnessHelper {
      * @param entity The entity using the tool
      * @return true if damage was applied, false if prevented due to inefficiency
      */
-    public static boolean damageItemIfEfficient(
+    public static boolean damageIfUseful(
             ItemStack itemStack,
             World world,
             Block block,

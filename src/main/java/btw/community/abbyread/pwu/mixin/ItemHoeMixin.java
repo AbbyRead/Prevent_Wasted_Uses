@@ -46,7 +46,7 @@ public class ItemHoeMixin {
 
         // Check efficiency - if not efficient, cancel and return false
         if (block != null) {
-            boolean wasEfficient = UsefulnessHelper.damageItemIfEfficient(
+            boolean wasEfficient = UsefulnessHelper.damageIfUseful(
                     itemStack,
                     world,
                     block,
