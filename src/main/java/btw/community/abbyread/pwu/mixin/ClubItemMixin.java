@@ -20,7 +20,7 @@ public class ClubItemMixin {
                     target = "Lnet/minecraft/src/ItemStack;damageItem(ILnet/minecraft/src/EntityLivingBase;)V"
             )
     )
-    private void ar_pwu$redirectDamageItem(
+    private void redirectDamageItem(
             ItemStack itemStack,
             int damageAmount,
             EntityLivingBase entity,
@@ -43,8 +43,9 @@ public class ClubItemMixin {
                     usingEntity
             );
         } else {
-            // Invalid block defaults to normal damageItem routine
+            // Default to normal damageItem routine on invalid blockID
             stack.damageItem(damageAmount, usingEntity);
         }
     }
+
 }
