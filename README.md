@@ -1,5 +1,5 @@
 # Prevent Wasted Uses
-A small addon for the Better Than Wolves CE 3.0.0 Minecraft mod.
+A small QoL addon for the Better Than Wolves CE 3.0.0 Minecraft mod.
 
 ## Overview
 
