@@ -2,6 +2,7 @@ package btw.community.abbyread.pwu.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import net.minecraft.src.Block;
@@ -10,6 +11,7 @@ import net.minecraft.src.ItemShears;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import btw.community.abbyread.pwu.util.ToolEfficiencyChecker;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemShears.class)
 public class ItemShearsMixin {
@@ -49,6 +51,13 @@ public class ItemShearsMixin {
             );
         } else {
             stack.damageItem(damageAmount, usingEntity);
+        }
+    }
+
+    @Inject(method = "isEfficientVsBlock", at = @At("RETURN"), cancellable = true)
+    private void ar_pwu$isEfficientVsBlock(ItemStack stack, World world, Block block, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
+        if (block == Block.tallGrass) {
+            cir.setReturnValue(true);
         }
     }
 }
