@@ -1,79 +1,63 @@
-# Fabric Example Mod
+# Prevent Wasted Uses
+A small addon for the Better Than Wolves CE 3.0.0 Minecraft mod.
 
-- [Quick start guide](#quick-start-guide)
-  - [Introduction to the folder structure](#introduction-to-the-folder-structure)
-  - [Creating your mod](#creating-your-mod)
-  - [Useful gradle commands](#useful-gradle-commands)
-- [More info](#more-info)
-- [License](#license)
+## Overview
 
-## Quick start guide
+Prevent Wasted Uses is a quality-of-life addon that prevents durability damage to an item if it was not helpful.  
 
-* Clone this repository
-* Download the according BTW-CE 3.0+ *intermediary* release
-* Drag&Drop the intermediary .zip file onto the *install.bat*
-* Wait till it fully finishes
-* Run the gradle task *build* and then *runClient*
+## Impetus
+Needing to swap between inventory slots constantly to avoid wasting durability is pure tedium.  It adds no meaningful challenge, and it feels bad.  Let's not keep that anti-feature.
 
-### Introduction to the folder structure
+## Difference of Opinion
+FlowerChild (the original author of Better Than Wolves) purposely made weapons take _more_ damage when used on blocks.  I don't find this necessary, practical, or fun.
 
-**Build files:**
+## Features
 
-| File                | Description                                              |
-| ------------------- | -------------------------------------------------------- |
-| `build.gradle`      | Configures the compilation process.                      |
-| `gradle.properties` | Contains properties for Minecraft, fabric, and your mod. |
-| `settings.gradle`   | Configures the plugin repositories.                      |
+* The addon checks if a tool or weapon is actually effective at breaking, harvesting, or converting the target block.
+* Tools only take damage if one of these conditions is true:
+  * The tool has higher mining efficiency than bare hands
+  * The tool is marked as efficient vs. that block type
+  * The tool can harvest that block
+  * The tool can convert that block (e.g., loose dirt to tilled soil)
+* If none of these apply, no damage is dealt—you can freely use any tool without penalty.
+* Does not affect any other item damage situations.  For example, fishing is unchanged.
 
-**Fabric files:**
+---
 
-These files are located at `src/main/resources`.
+## Installation
 
-| File                    | Description                              | Additional information                                                                                                |
-| ----------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `fabric.mod.json`       | Contains metadata about your mod.        | [wiki:fabric_mod_json_spec](https://fabricmc.net/wiki/documentation:fabric_mod_json_spec)                             |
-| `modid.mixins.json`     | Contains a list of all your mixin files. | [wiki:mixin_registration](https://fabricmc.net/wiki/tutorial:mixin_registration)                                      |
-| `assets/modid/icon.png` | The icon of your mod.                    | [wiki:fabric_mod_json_spec#icon](https://fabricmc.net/wiki/documentation:fabric_mod_json_spec?s[]=icon#custom_fields) |
+1. Install Better Than Worlds: Community Edition 3.0.0 + Legacy Fabric by following the instructions on the [wiki](https://wiki.btwce.com/view/3.0.0_Beta).
+2. Download this addon's JAR file from the Releases page.
+3. Place the addon JAR file in your `.minecraft/mods` folder.
+4. Launch Minecraft. Tools will now only take damage when actually useful.
 
+---
 
-### Creating your mod
+## Compatibility
 
-First of you must replace all occurrences of `modid` with the id of your mod.
+* **Required**: Better Than Worlds CE 3.0.0
+* **Mod Loader**: Fabric/Mixin based (Packaged with the BTW Instance)
+* Designed to work with existing tools and potentially those added by addons.
+* No known conflicts at this time.
 
-If your mod doesn't use mixins you can safely remove the mixin entry in your `fabric.mod.json` as well as delete any `*.mixin.json` files.
-
-This template has the legacy fabric api included in it's build script, more info about the api can be found at it's [github repo](https://github.com/Legacy-Fabric/fabric).
-If you know what you are doing you can also safely remove the api from the build script as it isn't required.
-
-### Useful gradle commands
-
-```sh
-# Compile your mod
-./gradlew build
-
-# Remove old build files
-./gradlew clean
-
-# Generate Minecraft sources
-./gradlew genSources
-
-# Launch a modded Minecraft client
-./gradlew runClient
-
-# Kill gradle if it's doing stupid things
-./gradlew --stop
-```
-
-## More info
-
-Additional tutorials and tips can be found in the [wiki](https://github.com/Legacy-Fabric/fabric-example-mod/wiki).
-
-For more detailed setup instructions please see the [fabric wiki](https://fabricmc.net/wiki/tutorial:setup).
-
-If you are new to fabric or Minecraft modding in general then [this wiki page](https://fabricmc.net/wiki/tutorial:primer) may help you.
+---
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
-This project incorporates:
-* A precompiled version of [Tiny Remapper](https://github.com/FabricMC/tiny-remapper) (LGPL-3.0)
+This project is released under the [BSD Zero-Clause License](LICENSE).
+You're free to use, modify, and share it however you see fit.
+
+---
+
+## Credits
+
+* **Addon author**: Abigail Read
+* **Better Than Worlds**: Created by *FlowerChild*, continued by the BTW Community
+* Thanks to the **Legacy Fabric team** for keeping classic modding alive.
+
+---
+
+*"Purposes are deduced from behaviour, not from rhetoric or stated goals."* &ensp;– Donella Meadows
+</br><small>
+[wikiquote](https://en.wikiquote.org/wiki/Donella_Meadows)
+</small>
