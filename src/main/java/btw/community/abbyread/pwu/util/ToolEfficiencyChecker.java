@@ -51,7 +51,8 @@ public class ToolEfficiencyChecker {
 
         boolean betterThanNothing = moreEfficient || isEfficientVsBlock || canHarvestBlock || canConvertBlock;
 
-        if (DEBUG) {
+        if (!world.isRemote && DEBUG) {
+            System.out.println("-------------------------");
             System.out.println("toolEfficiency: " + toolEfficiency);
             System.out.println("isEfficientVsBlock: " + isEfficientVsBlock);
             System.out.println("canHarvestBlock: " + canHarvestBlock);
@@ -61,7 +62,7 @@ public class ToolEfficiencyChecker {
         // Only apply damage if tool is actually better than nothing
         if (betterThanNothing) {
             itemStack.damageItem(damageAmount, entity);
-            if (world.isRemote && DEBUG) {
+            if (!world.isRemote && DEBUG) {
                 System.out.println("Damaged item by " + damageAmount);
             }
             return true;
