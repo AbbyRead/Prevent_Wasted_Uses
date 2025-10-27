@@ -24,7 +24,7 @@ public class ToolItemMixin {
                     target = "Lnet/minecraft/src/ItemStack;damageItem(ILnet/minecraft/src/EntityLivingBase;)V"
             )
     )
-    private static void redirectDamageItem(
+    private void redirectDamageItem(
             ItemStack itemStack,
             int damageAmount,
             EntityLivingBase entity,
