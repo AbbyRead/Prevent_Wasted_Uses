@@ -31,17 +31,17 @@ public class ItemHoeMixin {
             ItemStack itemStack,
             EntityPlayer entityPlayer,
             World world,
-            int i,
-            int j,
-            int k,
-            int l,
-            float f,
-            float g,
-            float h,
+            int x,
+            int y,
+            int z,
+            int side,
+            float clickX,
+            float clickY,
+            float clickZ,
             CallbackInfoReturnable<Boolean> cir
     ) {
         // Get the block being tilled
-        int blockID = world.getBlockId(i, j, k);
+        int blockID = world.getBlockId(x, y, z);
         Block block = Block.blocksList[blockID];
 
         // Check efficiency - if not efficient, cancel and return false
@@ -50,7 +50,7 @@ public class ItemHoeMixin {
                     itemStack,
                     world,
                     block,
-                    i, j, k,
+                    x, y, z,
                     1,
                     entityPlayer
             );
