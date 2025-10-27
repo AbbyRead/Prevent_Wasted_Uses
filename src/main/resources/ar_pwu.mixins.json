@@ -4,6 +4,7 @@
   "package": "btw.community.abbyread.pwu.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ChiselItemMixin",
     "ItemHoeMixin",
     "ItemShearsMixin",
     "ItemToolMixin",

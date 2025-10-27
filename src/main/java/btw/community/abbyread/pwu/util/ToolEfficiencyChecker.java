@@ -1,9 +1,6 @@
 package btw.community.abbyread.pwu.util;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityLivingBase;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
 public class ToolEfficiencyChecker {
 
@@ -42,13 +39,19 @@ public class ToolEfficiencyChecker {
 
         // Get the efficiency of the current tool on this block
         float toolEfficiency = itemStack.getStrVsBlock(world, block, x, y, z);
-
+        if (world.isRemote) {
+            System.out.println("toolEfficiency: " + toolEfficiency);
+            System.out.println("isEfficientVsBlock: " + itemStack.getItem().isEfficientVsBlock(itemStack, world, block, x, y, z));
+        }
         // Get bare hands efficiency (1.0x - no bonus)
         float bareHandsEfficiency = 1.0f;
 
         // Only apply damage if tool is actually better than bare hands
-        if (toolEfficiency > bareHandsEfficiency) {
+        if (toolEfficiency > bareHandsEfficiency || itemStack.getItem().isEfficientVsBlock(itemStack, world, block, x, y, z)) {
             itemStack.damageItem(damageAmount, entity);
+            if (world.isRemote) {
+                System.out.println("Damaged item by " + damageAmount);
+            }
             return true;
         }
 
