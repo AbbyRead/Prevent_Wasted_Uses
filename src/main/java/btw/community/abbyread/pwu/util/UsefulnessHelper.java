@@ -2,7 +2,7 @@ package btw.community.abbyread.pwu.util;
 
 import net.minecraft.src.*;
 
-public class ToolEfficiencyChecker {
+public class UsefulnessHelper {
     private static final boolean DEBUG = true;
 
     /**

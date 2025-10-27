@@ -10,7 +10,7 @@ import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.ItemShears;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
-import btw.community.abbyread.pwu.util.ToolEfficiencyChecker;
+import btw.community.abbyread.pwu.util.UsefulnessHelper;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemShears.class)
@@ -41,7 +41,7 @@ public class ItemShearsMixin {
     ) {
         Block block = Block.blocksList[blockID];
         if (block != null) {
-            ToolEfficiencyChecker.damageItemIfEfficient(
+            UsefulnessHelper.damageItemIfEfficient(
                     stack,
                     world,
                     block,

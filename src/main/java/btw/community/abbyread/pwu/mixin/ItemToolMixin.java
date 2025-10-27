@@ -9,7 +9,7 @@ import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ItemTool;
 import net.minecraft.src.World;
-import btw.community.abbyread.pwu.util.ToolEfficiencyChecker;
+import btw.community.abbyread.pwu.util.UsefulnessHelper;
 
 @Mixin(ItemTool.class)
 public class ItemToolMixin {
@@ -44,7 +44,7 @@ public class ItemToolMixin {
 
         // Only check efficiency if we have a valid block
         if (block != null) {
-            ToolEfficiencyChecker.damageItemIfEfficient(
+            UsefulnessHelper.damageItemIfEfficient(
                     stack,
                     world,
                     block,

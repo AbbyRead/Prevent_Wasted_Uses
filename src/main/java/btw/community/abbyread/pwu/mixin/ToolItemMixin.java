@@ -2,7 +2,6 @@ package btw.community.abbyread.pwu.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import net.minecraft.src.Block;
@@ -10,8 +9,7 @@ import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import btw.item.items.ToolItem;
-import btw.community.abbyread.pwu.util.ToolEfficiencyChecker;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import btw.community.abbyread.pwu.util.UsefulnessHelper;
 
 @Mixin(ToolItem.class)
 public class ToolItemMixin {
@@ -40,7 +38,7 @@ public class ToolItemMixin {
     ) {
         Block block = Block.blocksList[blockID];
         if (block != null) {
-            ToolEfficiencyChecker.damageItemIfEfficient(
+            UsefulnessHelper.damageItemIfEfficient(
                     stack,
                     world,
                     block,

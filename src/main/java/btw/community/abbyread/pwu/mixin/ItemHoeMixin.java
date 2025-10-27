@@ -10,7 +10,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemHoe;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
-import btw.community.abbyread.pwu.util.ToolEfficiencyChecker;
+import btw.community.abbyread.pwu.util.UsefulnessHelper;
 
 @Mixin(ItemHoe.class)
 public class ItemHoeMixin {
@@ -46,7 +46,7 @@ public class ItemHoeMixin {
 
         // Check efficiency - if not efficient, cancel and return false
         if (block != null) {
-            boolean wasEfficient = ToolEfficiencyChecker.damageItemIfEfficient(
+            boolean wasEfficient = UsefulnessHelper.damageItemIfEfficient(
                     itemStack,
                     world,
                     block,
