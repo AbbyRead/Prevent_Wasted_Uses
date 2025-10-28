@@ -4,7 +4,7 @@
   "provides": ["btw_pwu", "btw-pwu", "pwu", "prevent_wasted_uses"],
   "version": "${version}",
   "name": "Prevent Wasted Uses",
-  "description": "Prevents tool durability loss when tools are used ineffectively.",
+  "description": "Prevents item damage if anything else would do just as well.",
   "authors": ["Abigail Read"],
   "contact": {
     "homepage": "https://github.com/AbbyRead/Prevent_Wasted_Uses",

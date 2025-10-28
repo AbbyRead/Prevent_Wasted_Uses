@@ -1,5 +1,6 @@
 package btw.community.abbyread.pwu.util;
 
+import btw.block.BTWBlocks;
 import net.minecraft.src.*;
 
 public class UsefulnessHelper {
@@ -47,6 +48,9 @@ public class UsefulnessHelper {
         boolean isEfficientVsBlock = itemStack.getItem().isEfficientVsBlock(itemStack, world, block, x, y, z);
         boolean canHarvestBlock = itemStack.getItem().canHarvestBlock(itemStack, world, block, x, y, z);
         boolean canConvertBlock = block.canConvertBlock(itemStack, world, x, y, z);
+
+        // Disregard false positive from stone
+        if (block.blockMaterial == Material.rock) canConvertBlock = false;
 
         boolean betterThanNothing = moreEfficient || isEfficientVsBlock || canHarvestBlock || canConvertBlock;
 
