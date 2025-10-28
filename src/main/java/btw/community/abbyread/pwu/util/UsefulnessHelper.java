@@ -49,8 +49,9 @@ public class UsefulnessHelper {
         boolean canHarvestBlock = itemStack.getItem().canHarvestBlock(itemStack, world, block, x, y, z);
         boolean canConvertBlock = block.canConvertBlock(itemStack, world, x, y, z);
 
-        // Disregard false positive from stone
+        // Disregard false positives
         if (block.blockMaterial == Material.rock) canConvertBlock = false;
+        if (block.blockMaterial == BTWBlocks.logMaterial) canConvertBlock = false;
 
         boolean betterThanNothing = moreEfficient || isEfficientVsBlock || canHarvestBlock || canConvertBlock;
 
