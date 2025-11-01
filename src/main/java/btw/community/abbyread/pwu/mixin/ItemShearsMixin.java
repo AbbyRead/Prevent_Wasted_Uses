@@ -46,7 +46,6 @@ public class ItemShearsMixin {
                     usingEntity
             );
         } else {
-            // Default to normal damageItem routine on invalid blockID
             stack.damageItem(damageAmount, usingEntity);
         }
     }
@@ -64,5 +63,5 @@ public class ItemShearsMixin {
             cir.setReturnValue(true);
         }
     }
-
 }
+

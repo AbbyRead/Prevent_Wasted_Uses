@@ -43,9 +43,7 @@ public class ClubItemMixin {
                     usingEntity
             );
         } else {
-            // Default to normal damageItem routine on invalid blockID
             stack.damageItem(damageAmount, usingEntity);
         }
     }
-
 }

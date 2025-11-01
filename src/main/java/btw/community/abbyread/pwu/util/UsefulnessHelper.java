@@ -4,7 +4,7 @@ import btw.block.BTWBlocks;
 import net.minecraft.src.*;
 
 public class UsefulnessHelper {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     /**
      * Damages an item only if it's more efficient than bare hands at mining the target block.
@@ -34,8 +34,14 @@ public class UsefulnessHelper {
             return;
         }
 
-        if (!itemStack.isItemStackDamageable()) {
-            return;
+        if (!itemStack.isItemStackDamageable()) return;
+
+        // Check and consume the conversion flag from the itemstack
+        boolean wasJustConverted = false;
+        if (itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey("ar_pwu$converted")) {
+            wasJustConverted = itemStack.getTagCompound().getBoolean("ar_pwu$converted");
+            System.out.println("wasJustConverted: " + wasJustConverted);
+            itemStack.getTagCompound().removeTag("ar_pwu$converted");  // Consume it
         }
 
         // Get the efficiency of the current tool on this block
@@ -53,14 +59,15 @@ public class UsefulnessHelper {
         if (block.blockMaterial == Material.rock) canConvertBlock = false;
         if (block.blockMaterial == BTWBlocks.logMaterial) canConvertBlock = false;
 
-        boolean betterThanNothing = moreEfficient || isEfficientVsBlock || canHarvestBlock || canConvertBlock;
+        boolean betterThanNothing = moreEfficient || isEfficientVsBlock || canHarvestBlock || canConvertBlock || wasJustConverted;
 
         if (!world.isRemote && DEBUG) {
             System.out.println("-------------------------");
-            System.out.println("toolEfficiency: " + toolEfficiency);
+            System.out.println("toolEfficiency:     " + toolEfficiency);
             System.out.println("isEfficientVsBlock: " + isEfficientVsBlock);
-            System.out.println("canHarvestBlock: " + canHarvestBlock);
-            System.out.println("canConvertBlock: " + canConvertBlock);
+            System.out.println("canHarvestBlock:    " + canHarvestBlock);
+            System.out.println("canConvertBlock:    " + canConvertBlock);
+            System.out.println("wasJustConverted:   " + wasJustConverted);
         }
 
         // Only apply damage if tool is actually better than nothing
@@ -69,8 +76,10 @@ public class UsefulnessHelper {
             if (!world.isRemote && DEBUG) {
                 System.out.println("Damaged item by " + damageAmount);
             }
+        } else {
+            if (!world.isRemote && DEBUG) {
+                System.out.println("Prevented damage.");
+            }
         }
-
     }
-
 }

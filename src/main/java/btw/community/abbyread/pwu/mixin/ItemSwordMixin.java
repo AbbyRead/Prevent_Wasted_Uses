@@ -39,9 +39,7 @@ public class ItemSwordMixin {
                     usingEntity
             );
         } else {
-            // Default to normal damageItem routine on invalid blockID
             stack.damageItem(damageAmount, usingEntity);
         }
     }
-
 }
