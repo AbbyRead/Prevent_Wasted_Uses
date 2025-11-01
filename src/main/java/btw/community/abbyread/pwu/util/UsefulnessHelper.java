@@ -8,7 +8,7 @@ import java.util.Map;
 public class UsefulnessHelper {
     private static final boolean DEBUG = false;
 
-    // Track converted itemstacks with their conversion context
+    // Track converted item stacks with their conversion context
     private static final Map<ItemStack, ConversionContext> conversionContexts = new WeakHashMap<>();
     private static final long CONVERSION_FLAG_TTL_MILLIS = 100L;
 
@@ -78,12 +78,18 @@ public class UsefulnessHelper {
         boolean betterThanNothing = moreEfficient || isEfficientVsBlock || canHarvestBlock || canConvertBlock || wasJustConverted;
 
         if (!world.isRemote && DEBUG) {
-            System.out.println("-------------------------");
+            System.out.println("=== damageIfUseful DEBUG ===");
+            System.out.println("Block: " + block.getClass().getSimpleName() + " (ID: " + block.blockID + ")");
+            System.out.println("Block Material: " + block.blockMaterial);
+            System.out.println("Tool: " + itemStack.getItem().getClass().getSimpleName());
             System.out.println("toolEfficiency:     " + toolEfficiency);
+            System.out.println("bareHandsEfficiency: 1.0");
+            System.out.println("moreEfficient:      " + moreEfficient);
             System.out.println("isEfficientVsBlock: " + isEfficientVsBlock);
             System.out.println("canHarvestBlock:    " + canHarvestBlock);
             System.out.println("canConvertBlock:    " + canConvertBlock);
             System.out.println("wasJustConverted:   " + wasJustConverted);
+            System.out.println("betterThanNothing:  " + betterThanNothing);
         }
 
         // Only apply damage if tool is actually better than nothing
@@ -96,11 +102,13 @@ public class UsefulnessHelper {
             }
 
             if (!world.isRemote && DEBUG) {
-                System.out.println("Damaged item by " + damageAmount);
+                System.out.println(">>> DAMAGE APPLIED: " + damageAmount);
+                System.out.println();
             }
         } else {
             if (!world.isRemote && DEBUG) {
-                System.out.println("Prevented damage.");
+                System.out.println(">>> DAMAGE PREVENTED");
+                System.out.println();
             }
         }
     }
