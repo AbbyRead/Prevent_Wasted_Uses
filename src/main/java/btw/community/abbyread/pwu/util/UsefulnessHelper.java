@@ -40,7 +40,6 @@ public class UsefulnessHelper {
         boolean wasJustConverted = false;
         if (itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey("ar_pwu$converted")) {
             wasJustConverted = itemStack.getTagCompound().getBoolean("ar_pwu$converted");
-            System.out.println("wasJustConverted: " + wasJustConverted);
             itemStack.getTagCompound().removeTag("ar_pwu$converted");  // Consume it
         }
 

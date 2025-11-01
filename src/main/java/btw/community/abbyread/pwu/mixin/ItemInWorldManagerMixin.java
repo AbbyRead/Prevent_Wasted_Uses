@@ -42,7 +42,6 @@ public abstract class ItemInWorldManagerMixin {
             }
             // Set the conversion flag
             stack.getTagCompound().setBoolean("ar_pwu$converted", true);
-            System.out.println("ar_pwu$converted set true");
         }
 
         // Return the original result
