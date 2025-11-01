@@ -1,6 +1,7 @@
 package btw.community.abbyread.pwu.mixin;
 
 import net.minecraft.src.*;
+import btw.community.abbyread.pwu.util.UsefulnessHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ItemInWorldManagerMixin {
     /**
      * Redirect the convertBlock call to capture its return value.
-     * If conversion succeeds, mark the itemstack with a conversion flag.
+     * If conversion succeeds, mark the itemstack as converted via UsefulnessHelper.
      */
     @Redirect(
             method = "survivalTryHarvestBlock",
@@ -34,14 +35,9 @@ public abstract class ItemInWorldManagerMixin {
         // Call the original convertBlock method
         boolean convertedSuccessfully = block.convertBlock(stack, world, x, y, z, fromSide);
 
-        // If conversion succeeded, mark the itemstack
-        if (convertedSuccessfully && stack != null) {
-            // Create NBT tag if it doesn't exist
-            if (!stack.hasTagCompound()) {
-                stack.setTagCompound(new NBTTagCompound());
-            }
-            // Set the conversion flag
-            stack.getTagCompound().setBoolean("ar_pwu$converted", true);
+        // If conversion succeeded, mark the itemstack with the original block info (server-side only)
+        if (convertedSuccessfully && stack != null && !world.isRemote) {
+            UsefulnessHelper.markAsConverted(stack, block.blockID);
         }
 
         // Return the original result

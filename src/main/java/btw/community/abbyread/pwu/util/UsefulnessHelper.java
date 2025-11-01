@@ -2,9 +2,30 @@ package btw.community.abbyread.pwu.util;
 
 import btw.block.BTWBlocks;
 import net.minecraft.src.*;
+import java.util.WeakHashMap;
+import java.util.Map;
 
 public class UsefulnessHelper {
     private static final boolean DEBUG = false;
+
+    // Track converted itemstacks with their conversion context
+    private static final Map<ItemStack, ConversionContext> conversionContexts = new WeakHashMap<>();
+    private static final long CONVERSION_FLAG_TTL_MILLIS = 100L;
+
+    /**
+     * Stores information about a block conversion event.
+     */
+    public static class ConversionContext {
+        public final int originalBlockID;
+        public final Block originalBlock;
+        public final long timestamp;
+
+        public ConversionContext(int blockID, Block block) {
+            this.originalBlockID = blockID;
+            this.originalBlock = block;
+            this.timestamp = System.currentTimeMillis();
+        }
+    }
 
     /**
      * Damages an item only if it's more efficient than bare hands at mining the target block.
@@ -36,12 +57,8 @@ public class UsefulnessHelper {
 
         if (!itemStack.isItemStackDamageable()) return;
 
-        // Check and consume the conversion flag from the itemstack
-        boolean wasJustConverted = false;
-        if (itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey("ar_pwu$converted")) {
-            wasJustConverted = itemStack.getTagCompound().getBoolean("ar_pwu$converted");
-            itemStack.getTagCompound().removeTag("ar_pwu$converted");  // Consume it
-        }
+        // Check if this block was just converted
+        boolean wasJustConverted = isBlockJustConverted(itemStack);
 
         // Get the efficiency of the current tool on this block
         float toolEfficiency = itemStack.getStrVsBlock(world, block, x, y, z);
@@ -72,6 +89,12 @@ public class UsefulnessHelper {
         // Only apply damage if tool is actually better than nothing
         if (betterThanNothing) {
             itemStack.damageItem(damageAmount, entity);
+
+            // Clear the conversion flag AFTER we've made our decision and applied damage
+            if (wasJustConverted && !world.isRemote) {
+                clearConversionFlag(itemStack);
+            }
+
             if (!world.isRemote && DEBUG) {
                 System.out.println("Damaged item by " + damageAmount);
             }
@@ -79,6 +102,46 @@ public class UsefulnessHelper {
             if (!world.isRemote && DEBUG) {
                 System.out.println("Prevented damage.");
             }
+        }
+    }
+
+    /**
+     * Check if the itemstack was recently converted using server-side tracking.
+     * Validates that the conversion was for a block type we care about (not stone/logs).
+     */
+    private static boolean isBlockJustConverted(ItemStack itemStack) {
+        ConversionContext ctx = conversionContexts.get(itemStack);
+        if (ctx != null) {
+            long age = System.currentTimeMillis() - ctx.timestamp;
+
+            // Check if still within TTL
+            if (age < CONVERSION_FLAG_TTL_MILLIS) {
+                // Reject false positives: if the original block was stone or log, don't count it
+                if (ctx.originalBlock != null) {
+                    if (ctx.originalBlock.blockMaterial == Material.rock) return false;
+                    if (ctx.originalBlock.blockMaterial == BTWBlocks.logMaterial) return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Clear the conversion flag for this itemstack.
+     */
+    private static void clearConversionFlag(ItemStack itemStack) {
+        conversionContexts.remove(itemStack);
+    }
+
+    /**
+     * Mark an itemstack as having just been converted from a specific block.
+     * Called from ItemInWorldManagerMixin.
+     */
+    public static void markAsConverted(ItemStack itemStack, int originalBlockID) {
+        if (itemStack != null) {
+            Block originalBlock = Block.blocksList[originalBlockID];
+            conversionContexts.put(itemStack, new ConversionContext(originalBlockID, originalBlock));
         }
     }
 }
