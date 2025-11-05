@@ -12,7 +12,7 @@ Needing to swap between inventory slots constantly to avoid wasting durability i
 
 ## Difference of Opinion
 
-FlowerChild (the original author of Better Than Wolves) purposely made weapons take more damage when used on blocks. I don't find this necessary, practical, or fun. This addon removes that penalty while keeping the game's core difficulty intact.
+FlowerChild (the original author of Better Than Wolves) purposely made weapons take more damage when used on blocks. I don't find this necessary, practical, or fun. This addon removes that penalty.
 
 ## Features
 
