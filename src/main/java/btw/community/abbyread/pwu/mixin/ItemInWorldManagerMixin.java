@@ -3,19 +3,16 @@ package btw.community.abbyread.pwu.mixin;
 import net.minecraft.src.*;
 import btw.community.abbyread.pwu.util.UsefulnessHelper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/**
- * Hooks ItemInWorldManager to track when blocks are converted.
- * This allows us to prevent double-damaging tools on converted blocks.
- */
 @Mixin(ItemInWorldManager.class)
 public abstract class ItemInWorldManagerMixin {
-    /**
-     * Redirect the convertBlock call to capture its return value.
-     * If conversion succeeds, mark the itemstack as converted via UsefulnessHelper.
-     */
+
+    @Unique
+    private static final boolean DEBUG = true;
+
     @Redirect(
             method = "survivalTryHarvestBlock",
             at = @At(
@@ -32,15 +29,18 @@ public abstract class ItemInWorldManagerMixin {
             int z,
             int fromSide
     ) {
-        // Call the original convertBlock method
         boolean convertedSuccessfully = block.convertBlock(stack, world, x, y, z, fromSide);
 
-        // If conversion succeeded, mark the itemstack with the original block info (server-side only)
+        if (DEBUG) {
+            System.out.println("[PWU DEBUG] convertBlock called on " + block.getClass().getSimpleName()
+                    + " | success=" + convertedSuccessfully);
+        }
+
         if (convertedSuccessfully && stack != null && !world.isRemote) {
+            if (DEBUG) System.out.println("[PWU DEBUG] Marking stack as converted: " + stack);
             UsefulnessHelper.markAsConverted(stack, block.blockID);
         }
 
-        // Return the original result
         return convertedSuccessfully;
     }
 }
