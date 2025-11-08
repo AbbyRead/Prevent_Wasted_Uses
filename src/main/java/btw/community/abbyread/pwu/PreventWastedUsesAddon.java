@@ -1,9 +1,9 @@
 package btw.community.abbyread.pwu;
 
-import btw.AddonHandler;
 import btw.BTWAddon;
 
 public class PreventWastedUsesAddon extends BTWAddon {
+    @SuppressWarnings("unused")
     private static PreventWastedUsesAddon instance;
 
     public PreventWastedUsesAddon() {
@@ -12,6 +12,6 @@ public class PreventWastedUsesAddon extends BTWAddon {
 
     @Override
     public void initialize() {
-        AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
+        // Initialization logic (no debug)
     }
 }

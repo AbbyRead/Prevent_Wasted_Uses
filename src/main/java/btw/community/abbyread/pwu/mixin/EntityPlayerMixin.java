@@ -17,8 +17,6 @@ public class EntityPlayerMixin {
 
     @Unique
     private static final String NBT_TAG = "PWUPlayerData";
-    @Unique
-    private static final boolean DEBUG = true;
 
     @Unique
     private int playerShovelUseCounter = 0;
@@ -36,7 +34,6 @@ public class EntityPlayerMixin {
         NBTTagCompound myData = new NBTTagCompound();
         myData.setInteger("playerShovelUseCounter", playerShovelUseCounter);
         tag.setTag(NBT_TAG, myData);
-        if (DEBUG) System.out.println("[PWU DEBUG] Saving shovel counter: " + playerShovelUseCounter);
     }
 
     @Inject(method = "readModDataFromNBT", at = @At("TAIL"))
@@ -46,7 +43,6 @@ public class EntityPlayerMixin {
             playerShovelUseCounter = myData.hasKey("playerShovelUseCounter")
                     ? myData.getInteger("playerShovelUseCounter")
                     : 0;
-            if (DEBUG) System.out.println("[PWU DEBUG] Loaded shovel counter: " + playerShovelUseCounter);
         }
     }
 }
