@@ -1,5 +1,7 @@
 package btw.community.abbyread.pwu.mixin;
 
+import btw.community.abbyread.pwu.util.TieredShovelDamage;
+import btw.item.items.ShovelItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -34,17 +36,19 @@ public class ToolItemMixin {
             EntityLivingBase usingEntity
     ) {
         Block block = Block.blocksList[blockID];
-        if (block != null) {
-            UsefulnessHelper.damageIfUseful(
-                    stack,
-                    world,
-                    block,
-                    x, y, z,
-                    damageAmount,
-                    usingEntity
-            );
-        } else {
+        if (block == null) {
             stack.damageItem(damageAmount, usingEntity);
+            return;
         }
+
+        // Determine actual damage
+        int actualDamage = damageAmount;
+
+        // If this is a shovel, use shovel-specific damage table
+        if (stack.getItem() instanceof ShovelItem) {
+            actualDamage = TieredShovelDamage.getDamageForBlock(block);
+        }
+
+        UsefulnessHelper.damageIfUseful(stack, world, block, x, y, z, actualDamage, usingEntity);
     }
 }
